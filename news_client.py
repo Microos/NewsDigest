@@ -3,6 +3,7 @@ import simplejson as json
 import traceback
 import requests.exceptions as req_excption
 
+from config import get_config
 from newsapi import NewsApiClient
 
 '''
@@ -48,10 +49,9 @@ class NewsClient:
         self.__client = self.__get_client(config_file)
 
     def __get_client(self, config_file):
-        with open(config_file, 'r') as f:
-            j_obj = json.load(f)
+        conf = get_config()
 
-        self.API_KEY = j_obj['news-api-key']
+        self.API_KEY = conf['news-api-key']
         newsapi = NewsApiClient(api_key=self.API_KEY)
         return newsapi
 
@@ -60,13 +60,13 @@ class NewsClient:
         return self.__client.get_sources()
 
     @safe_api_request
-    def request_headlines(self, q=None, sources=None, category=None, language='en'):
+    def request_headlines(self, q=None, sources=None, category=None, page_size=30, page=1, language='en'):
         return self.__client.get_top_headlines(q=q, sources=sources, category=category,
-                                               language=language)
+                                               language=language, page_size=page_size, page=page)
 
     @safe_api_request
     def request_articals(self, q, sources, from_date, to_date, domains=None, language='en', sort_by='relevancy',
-                         page=2):
+                         page=1):
 
         return self.__client.get_everything(q=q, sources=sources, domains=domains, from_param=from_date,
                                             to=to_date, language=language, sort_by=sort_by, page=page)
@@ -85,7 +85,6 @@ class NewsClient:
 
         ret = {'status': 'ok', 'ids': ids, 'names': names}
         return ret
-
 
     def get_sources_list(self):
         ret_dict = self.get_sources()
@@ -110,13 +109,8 @@ class NewsClient:
         return self.request_articals(q='bitcoin', sources='abc-news', from_date='2019-02-01', to_date='2020-01-01')
 
 
-
-
 if __name__ == '__main__':
     api = NewsClient()
-    # print(api.sample_headline_request())
-    print(api.sample_artical_request())
-    # print(api.get_sources_list())
-    print(api.get_sources_list())
+    r = api.request_headlines()
+    print(r)
     print('Done')
-
