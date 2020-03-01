@@ -17,9 +17,9 @@ def safe_api_request(api_func):
     def func_wrapper(self, *args, **kwargs):
         try:
             resp = api_func(self, *args, **kwargs)
-            resp['err_code'] = None
-            resp['err_msg'] = None
-            return resp
+
+            ret = {'status':resp.pop('status'), 'err_code':None, 'err_msg':None, 'content': resp}
+            return ret
 
 
         except (TypeError, ValueError) as e1:
@@ -106,7 +106,7 @@ class NewsClient:
         return self.request_headlines(q='123', sources='ab', category='business')
 
     def sample_artical_request(self):
-        return self.request_articals(q='bitcoin', sources='abc-news', from_date='2019-02-01', to_date='2020-01-01')
+        return self.request_articals(q='bitcoin', sources=None, from_date='2020-02-19', to_date='2020-02-20')
 
 
 if __name__ == '__main__':

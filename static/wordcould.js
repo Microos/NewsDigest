@@ -1,11 +1,16 @@
 // List of words
+var wordsPadding = 3;
+var fontSizeUpScale = 1;
 
 function drawWordcloud() {
     var wcUrl = serverAddr + "/api/wordcloud";
+    var normMin = 12;
+    var normMax = 30;
+
     console.log("url = " + wcUrl);
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
+        if (this.readyState == 4) {
             var resp = JSON.parse(this.responseText);
             var wcDiv = document.getElementById('wordcloud');
             if (resp.status != 'ok') {
@@ -24,15 +29,11 @@ function drawWordcloud() {
         }
     };
     xhr.open("POST", wcUrl, true);
-    xhr.send();
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.send(`normMin=${normMin}&normMax=${normMax}`);
     console.log(xhr.responseText);
 
 }
-
-// var myWords = [{word: "Running", size: "10"}, {word: "Surfing", size: "20"}, {
-//     word: "Climbing",
-//     size: "50"
-// }, {word: "Kiting", size: "30"}, {word: "Sailing", size: "20"}, {word: "Snowboarding", size: "60"}, {word: "China", size: "100"}];
 
 function __drawWordcloud(myWords) {
     var cloudDiv = d3.select("#wordcloud");
@@ -48,12 +49,12 @@ function __drawWordcloud(myWords) {
         .words(myWords.map(function (d) {
             return {text: d.word, size: d.size};
         }))
-        .padding(15)        //space between words
+        .padding(wordsPadding)        //space between words
         .rotate(function () {
             return ~~(Math.random() * 2) * 90;
         })
         .fontSize(function (d) {
-            return d.size ;
+            return d.size;
         })      // font size of words
         .on("end", draw);
     layout.start();
@@ -69,11 +70,11 @@ function __drawWordcloud(myWords) {
             .data(words)
             .enter().append("text")
             .style("font-size", function (d) {
-                return d.size*2 + "px";
+                return fontSizeUpScale * d.size + 'px';
             })
             .style("fill", "black")
             .attr("text-anchor", "middle")
-            .style("font-family", "Impact").style("font-weight", "bolder")
+            .style("font-family", "impact").style("font-weight", "normal")
             .attr("transform", function (d) {
                 return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
             })

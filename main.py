@@ -16,19 +16,24 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/api/headlines', methods=['GET', 'POST'])
-def headlines():
-    for k, v in request.form.items():
-        print(f'{k}: {v} [type:{type(v)}]')
+@app.route('/api/headlines/slideshow', methods=['GET', 'POST'])
+def headlines_slideshow():
+    cnt = request.form.get('cnt', 0)
+    resp = server.get_headlines_slidshow_data(int(cnt))
 
-    return "good"
+    summary = response_summary('/api/headlines/slideshow', resp, request.form)
+    print(summary)
+
+    return resp
 
 
-# TODO: /api/wordcloud
 @app.route('/api/wordcloud', methods=['GET', 'POST'])
 def wordcloud():
-    resp = server.get_wordcloud_data()
-    summary = response_summary('/api/wordcloud', resp)
+    norm_min = request.form.get('normMin', 0)
+    norm_max = request.form.get('normMax', 0)
+
+    resp = server.get_wordcloud_data(int(norm_min), int(norm_max))
+    summary = response_summary('/api/wordcloud', resp, request.form)
     print(summary)
     return resp
 
