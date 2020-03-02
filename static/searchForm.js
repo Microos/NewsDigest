@@ -48,34 +48,51 @@ function onchangeCategorySelection(catSelect) {
     changeSourceSelectOptions(category);
 }
 
+// stores key(str: category name)-value(fragment)
+var sourceByCategory = {};
 
 function changeSourceSelectOptions(category) {
-    //get list
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
-        if (this.readyState == 4) {
-            var resp = JSON.parse(this.responseText);
-            if (resp.status != 'ok') {
-                logBadResponse(srcListUrl, resp);
-            } else {
-                var optionsFragment = document.createDocumentFragment();
-                resp.content.forEach((source) => {
-                    var opt = document.createElement("option");
-                    opt.value = source.id;
-                    opt.innerHTML = source.name;
-                    optionsFragment.appendChild(opt);
-                });
+    console.log(Object.keys(sourceByCategory));
+    if (sourceByCategory[category] == undefined) {
+        //no such a key, send request
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (this.readyState == 4) {
+                var resp = JSON.parse(this.responseText);
+                if (resp.status != 'ok') {
+                    logBadResponse(srcListUrl, resp);
+                } else {
+                    // const optionsFragment = document.createDocumentFragment();
+                    var optionElements = [];
+                    resp.content.forEach((source) => {
+                        var opt = document.createElement("option");
+                        opt.value = source.id;
+                        opt.innerHTML = source.name;
+                        optionElements.push(opt);
+                    });
 
-
-                searchSourceSelect.appendChild(optionsFragment);
+                    sourceByCategory[category] = optionElements;
+                    optionElements.forEach((o) => {
+                        searchSourceSelect.appendChild(o);
+                    });
+                }
             }
-        }
-    };
-    searchSourceSelect.innerText = "";
-    searchSourceSelect.appendChild(optionAll);
+        };
+        searchSourceSelect.innerText = "";
+        searchSourceSelect.appendChild(optionAll);
+        searchSourceSelect.selectedIndex = 0;
 
 
-    xhr.open('POST', srcListUrl, true);
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhr.send(`category=${category}`);
+        xhr.open('POST', srcListUrl, true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.send(`category=${category}`);
+    } else {
+        searchSourceSelect.innerText = "";
+        searchSourceSelect.appendChild(optionAll);
+        sourceByCategory[category].forEach((o) => {
+            searchSourceSelect.appendChild(o);
+        });
+        searchSourceSelect.selectedIndex = 0;
+    }
+
 }

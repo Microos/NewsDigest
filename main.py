@@ -22,7 +22,7 @@ def sources():
     category = None if category == 'all' else category
 
     resp = facade.get_sources(category)
-    response_summary('/api/searchform/sources', resp, request.form)
+    # response_summary('/api/searchform/sources', resp, request.form)
 
     return resp
 
@@ -63,4 +63,4 @@ def wordcloud():
 
 if __name__ == "__main__":
     conf = get_config()
-    app.run(host='0.0.0.0', port=conf['port'])
+    app.run(host='0.0.0.0', port=conf['port'], debug=conf['debug'])
