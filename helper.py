@@ -1,5 +1,6 @@
 import datetime
 from prettytable import PrettyTable
+import re
 
 
 def response_summary(endpoint, resp, form=None):
@@ -17,13 +18,22 @@ def response_summary(endpoint, resp, form=None):
     table.max_width = 50
     table.align[f'{endpoint}'] = 'l'
 
-    return str(table)
+    print(table)
 
 
-def validate_headline_item(item):
+def validate_dict(item):
     for k, v in item.items():
         if item[k] is None:
             return False
-        if k == 'source' and not validate_headline_item(item[k]):
+
+        if (type(item[k])) == str and (item[k] in ['', 'null']):
             return False
+
+        if type(item[k]) == dict and not validate_dict(item[k]):
+            return False
+
     return True
+
+
+def news_content_cleanup(content_str):
+    return re.sub(r"\[\+\d+ chars\]|\r|\n|…", "", content_str)

@@ -1,13 +1,13 @@
 // List of words
 var wordsPadding = 3;
 var fontSizeUpScale = 1;
+var wordcloudUrl = serverAddr + "/api/wordcloud";
 
 function drawWordcloud() {
-    var wcUrl = serverAddr + "/api/wordcloud";
-    var normMin = 12;
-    var normMax = 30;
 
-    console.log("url = " + wcUrl);
+    var normMin = 15;
+    var normMax = 35;
+
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
@@ -15,23 +15,22 @@ function drawWordcloud() {
             var wcDiv = document.getElementById('wordcloud');
             if (resp.status != 'ok') {
                 // no ok
-                var msg = `err_code: ${resp.err_code}\nerr_msg : ${resp.err_msg}`;
-                console.log(`Got server error from "${wcUrl}"`);
-                console.log(msg);
-                console.log(' ---- end ----');
-                wcDiv.innerText = "500: Server Error.\n" + msg;
-                wcDiv.style.color = "red";
-
+                // var msg = `err_code: ${resp.err_code}\nerr_msg : ${resp.err_msg}`;
+                // console.log(`Got server error from "${wordcloudUrl}"`);
+                // console.log(msg);
+                // console.log(' ---- end ----');
+                // wcDiv.innerText = "500: Server Error.\n" + msg;
+                // wcDiv.style.color = "red";
+                logBadResponse(wordcloudUrl, resp);
             } else {
                 data = resp.content;
                 __drawWordcloud(data);
             }
         }
     };
-    xhr.open("POST", wcUrl, true);
+    xhr.open("POST", wordcloudUrl, true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.send(`normMin=${normMin}&normMax=${normMax}`);
-    console.log(xhr.responseText);
 
 }
 

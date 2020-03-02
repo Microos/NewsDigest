@@ -9,7 +9,6 @@ const headlineSlideShowUrl = serverAddr + '/api/headlines/slideshow';
 var onshowSlideIndex = 0;
 
 
-
 // get slideshow
 
 function appendSlideshowItem(title, brief, extUrl, imgUrl) {
@@ -35,6 +34,7 @@ function appendSlideshowItem(title, brief, extUrl, imgUrl) {
 
     var titleSubDiv = document.createElement("div");
     var anchorTitle = document.createElement("a");
+    anchorTitle.className = 'plain-anchor';
     anchorTitle.href = extUrl;
     anchorTitle.innerText = title;
 
@@ -44,8 +44,13 @@ function appendSlideshowItem(title, brief, extUrl, imgUrl) {
     var briefDiv = document.createElement("div");
     briefDiv.className = "headline-brief";
     var briefSubDiv = document.createElement("div");
-    briefSubDiv.innerText = brief;
+    var anchorBrief = document.createElement("a");
 
+    anchorBrief.className = 'plain-anchor';
+    anchorBrief.href = extUrl;
+    anchorBrief.innerText = brief;
+
+    briefSubDiv.appendChild(anchorBrief);
     briefDiv.appendChild(briefSubDiv);
 
     descriptDiv.appendChild(titleDiv);
@@ -71,11 +76,12 @@ function constructSlideshowItems() {
             // removeAllSlideShowItems();
             if (resp.status != 'ok') {
                 appendSlideshowItem(`[${this.status}]` + resp.err_code, resp.err_msg, "", '../static/error.jpg');
+                logBadResponse(headlineSlideShowUrl, resp);
             } else {
                 var list = resp.content;
                 for (var i = 0; i < list.length; i++) {
                     var item = list[i];
-                    appendSlideshowItem(item.title, item.content, item.url, item.urlToImage);
+                    appendSlideshowItem(item.title, item.description, item.url, item.urlToImage);
                 }
             }
             showSlides();

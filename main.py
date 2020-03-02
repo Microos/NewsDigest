@@ -16,25 +16,45 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/api/headlines/slideshow', methods=['GET', 'POST'])
-def headlines_slideshow():
-    cnt = request.form.get('cnt', 0)
-    resp = server.get_headlines_slidshow_data(int(cnt))
+@app.route('/api/searchform/sources', methods=['POST'])
+def sources():
+    category = request.form.get('category', None).lower()
+    category = None if category == 'all' else category
 
-    summary = response_summary('/api/headlines/slideshow', resp, request.form)
-    print(summary)
+    resp = server.get_sources(category)
+    response_summary('/api/searchform/sources', resp, request.form)
 
     return resp
 
 
-@app.route('/api/wordcloud', methods=['GET', 'POST'])
+@app.route('/api/headlines/newscard', methods=['POST'])
+def newscard():
+    cnt = int(request.form.get('cnt', 4))
+    source = request.form.get('source')
+
+    resp = server.get_newscard_data(source, cnt)
+
+    # response_summary('/api/headlines/newscard', resp, request.form)
+    return resp
+
+
+@app.route('/api/headlines/slideshow', methods=['POST'])
+def slideshow():
+    cnt = int(request.form.get('cnt', 5))
+    resp = server.get_slideshow_data(cnt)
+
+    # response_summary('/api/headlines/slideshow', resp, request.form)
+
+    return resp
+
+
+@app.route('/api/wordcloud', methods=['POST'])
 def wordcloud():
     norm_min = request.form.get('normMin', 0)
     norm_max = request.form.get('normMax', 0)
 
     resp = server.get_wordcloud_data(int(norm_min), int(norm_max))
-    summary = response_summary('/api/wordcloud', resp, request.form)
-    print(summary)
+    # response_summary('/api/wordcloud', resp, request.form)
     return resp
 
 

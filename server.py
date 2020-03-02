@@ -1,6 +1,6 @@
 from news_client import NewsClient
 from config import get_config
-from helper import validate_headline_item
+from helper import validate_dict, news_content_cleanup
 import simplejson as json
 import re
 
@@ -8,9 +8,40 @@ news_client = NewsClient()
 config = get_config()
 
 
-# TODO: headline slidshow
-def get_headlines_slidshow_data(cnt):
-    response = news_client.request_headlines(page_size=100)
+def get_newscard_data(source, cnt):
+    return __get_headlines_data(source=source, cnt=cnt)
+
+
+def get_slideshow_data(cnt):
+    return __get_headlines_data(source=None, cnt=cnt)
+
+
+def get_sources(category):
+    response = news_client.get_sources(category)
+    if (response['status'] != "ok"):
+        # directly return the error msg to the front end
+        return json.dumps(response, indent=4)
+
+    # if category is None, return 10 sources
+    # else return all sources
+    all_sources = response['content']['sources']
+
+    ret_list = []  # {'id': 'all', 'name': 'all'}
+    if (category is None):
+        indces = [5 * i for i in range(0, 10)]
+        for idx in indces:
+            ret_list.append({'id': all_sources[idx]['id'], 'name': all_sources[idx]['name']})
+    else:
+        for src in all_sources:
+            ret_list.append({'id': src['id'], 'name': src['name']})
+
+    ret_dict = {'status': 'ok', 'err_code': None, 'err_msg': None, 'content': ret_list}
+    json_ret_dict = json.dumps(ret_dict, indent=4)
+    return json_ret_dict
+
+
+def __get_headlines_data(source, cnt):
+    response = news_client.request_headlines(sources=source, page_size=100)
     if (response['status'] != "ok"):
         # directly return the error msg to the front end
         return json.dumps(response, indent=4)
@@ -18,11 +49,11 @@ def get_headlines_slidshow_data(cnt):
     ret_list = []
     for art in response['content']['articles']:
         if len(ret_list) == cnt: break
-        if not validate_headline_item(art):
+
+        if not validate_dict(art):
             continue
 
-        art['content'] = re.sub(r"\[\+\d+ chars\]|\r|\n|…", "", art['content'])
-        print(art['content'])
+        art['content'] = news_content_cleanup(art['content'])
         ret_list.append(art)
 
     ret_dict = {'status': 'ok', 'err_code': None, 'err_msg': None, 'content': ret_list}
@@ -102,5 +133,5 @@ def get_wordcloud_data(norm_min, norm_max):
 
 
 if __name__ == '__main__':
-    r = get_headlines_slidshow_data(4)
+    r = get_newscard_data('fox-news', 4)
     print(r)

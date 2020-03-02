@@ -56,8 +56,8 @@ class NewsClient:
         return newsapi
 
     @safe_api_request
-    def get_sources(self):
-        return self.__client.get_sources()
+    def get_sources(self, category=None):
+        return self.__client.get_sources(category=category)
 
     @safe_api_request
     def request_headlines(self, q=None, sources=None, category=None, page_size=30, page=1, language='en'):
@@ -106,11 +106,11 @@ class NewsClient:
         return self.request_headlines(q='123', sources='ab', category='business')
 
     def sample_artical_request(self):
-        return self.request_articals(q='bitcoin', sources=None, from_date='2020-02-19', to_date='2020-02-20')
+        return self.request_articals(q='bitcoin', sources=None, from_date='2020-01-01', to_date='2020-03-01')
 
 
 if __name__ == '__main__':
     api = NewsClient()
-    r = api.request_headlines()
+    r = api.get_sources()
     print(r)
     print('Done')
