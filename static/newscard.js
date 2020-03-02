@@ -78,12 +78,15 @@ function appendSourcedNewsItem(elm) {
         var maxH = cardH - imgH - titleH - marginH;
 
         var lineH = Number(briefCSS.lineHeight.slice(0, -2));
-        maxH = Math.ceil(maxH / lineH) * lineH;
 
-        briefDiv.style.maxHeight = `${maxH}px`;
-        // console.log(`${cardH - imgH - titleH}px`);
+        // method1: set '-webkit-line-clamp' to number of lines dynamically
+        var nLine = Math.ceil(maxH / lineH);
+        briefDiv.style['-webkit-line-clamp'] = nLine;
 
 
+        // method2: set maxHeight dynamically, then trigger overflow:hidden
+        // maxH = Math.ceil(maxH / lineH) * lineH;
+        // briefDiv.style.maxHeight = `${maxH}px`;
     });
 
 
