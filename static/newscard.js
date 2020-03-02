@@ -136,7 +136,7 @@ function constructNewscard(title, brief, extUrl, imgUrl) {
 
     var briefDiv = document.createElement("div");
     briefDiv.className = "brief";
-    briefDiv.innerHTML = brief + "[]" + brief; //TODO: remove test
+    briefDiv.innerHTML = brief;
 
     anchor.appendChild(img);
     anchor.appendChild(titleDiv);

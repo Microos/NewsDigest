@@ -5,7 +5,7 @@ from flask import request
 from config import get_config
 from flask_cors import CORS
 from helper import response_summary
-import server
+import server_facade as facade
 
 app = Flask(__name__)
 CORS(app)
@@ -21,7 +21,7 @@ def sources():
     category = request.form.get('category', None).lower()
     category = None if category == 'all' else category
 
-    resp = server.get_sources(category)
+    resp = facade.get_sources(category)
     response_summary('/api/searchform/sources', resp, request.form)
 
     return resp
@@ -32,7 +32,7 @@ def newscard():
     cnt = int(request.form.get('cnt', 4))
     source = request.form.get('source')
 
-    resp = server.get_newscard_data(source, cnt)
+    resp = facade.get_newscard_data(source, cnt)
 
     # response_summary('/api/headlines/newscard', resp, request.form)
     return resp
@@ -41,7 +41,7 @@ def newscard():
 @app.route('/api/headlines/slideshow', methods=['POST'])
 def slideshow():
     cnt = int(request.form.get('cnt', 5))
-    resp = server.get_slideshow_data(cnt)
+    resp = facade.get_slideshow_data(cnt)
 
     # response_summary('/api/headlines/slideshow', resp, request.form)
 
@@ -53,7 +53,7 @@ def wordcloud():
     norm_min = request.form.get('normMin', 0)
     norm_max = request.form.get('normMax', 0)
 
-    resp = server.get_wordcloud_data(int(norm_min), int(norm_max))
+    resp = facade.get_wordcloud_data(int(norm_min), int(norm_max))
     # response_summary('/api/wordcloud', resp, request.form)
     return resp
 

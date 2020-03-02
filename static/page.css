@@ -12,12 +12,12 @@
     --nav-button-active-bgcolor: #555555;
 
     --hortizontal-split-width: 20px;
-    --vertical-split-width: 30px;
+    --vertical-split-width: 35px;
     --headline-div-height: 250px;
 
-    --headline-subdiv-margin: 15px;
-    --slideshow-width: 400px;
-    --wordcloud-width: 270px;
+    --headline-subdiv-margin: 5px;
+    --slideshow-width: 420px;
+    --wordcloud-width: 290px;
 
     --newscard-height: 360px;
     --newscard-width: 23.5%;
@@ -74,7 +74,7 @@ a.plain-anchor {
     margin-right: auto;
     margin-top: 30px;
     width: var(--page-div-width);
-    border: 3px dashed chartreuse;
+    /*border: 3px dashed chartreuse;*/
 }
 
 .nav-sidebar {
@@ -130,7 +130,7 @@ a.plain-anchor {
     height: var(--headline-div-height);
 
     display: grid;
-    grid-template-columns: 60% auto;
+    grid-template-columns: auto auto;
 }
 
 #slideshow {
@@ -263,8 +263,9 @@ a.plain-anchor {
 
 
 hr {
-    margin: 3px 0;
-    border: 1px solid rgba(85, 85, 85, 0.24);
+    margin: 7px 0;
+    border-top: 2px dashed rgba(0, 0, 0, 0.5);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.5);
 }
 
 
@@ -300,7 +301,7 @@ hr {
     border-radius: 5px;
 }
 
-.newscard .newscard-descript-div{
+.newscard .newscard-descript-div {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -326,7 +327,7 @@ hr {
     line-height: 14px;
 
     display: -webkit-box;
-    /*-webkit-line-clamp: 2;*/
+    /*-webkit-line-clamp: <dynamic value: newscard.js>;*/
     -webkit-box-orient: vertical;
     overflow: hidden;
 
