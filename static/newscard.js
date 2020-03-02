@@ -46,6 +46,47 @@ function promisedConstructSourcedNewsItem(source) {
 function appendSourcedNewsItem(elm) {
     srcNewsDiv.appendChild(elm);
 
+
+    // adjust text height
+    var newscards = elm.getElementsByClassName("newscard");
+    Array.from(newscards).forEach((card) => {
+
+
+        var img = card.getElementsByTagName("img")[0];
+        var titleDiv = card.getElementsByClassName("title")[0];
+        var briefDiv = card.getElementsByClassName("brief")[0];
+
+        var cardCSS = window.getComputedStyle(card);
+        var imgCSS = window.getComputedStyle(img);
+        var titleCSS = window.getComputedStyle(titleDiv);
+        var briefCSS = window.getComputedStyle(briefDiv);
+
+
+        var cardH = card.clientHeight;
+        var imgH = img.clientHeight;
+        var titleH = titleDiv.clientHeight;
+
+
+        var marginH = 0;
+        var margins = [imgCSS.marginBottom, imgCSS.marginTop, titleCSS.marginBottom, titleCSS.marginTop, briefCSS.marginTop, briefCSS.marginBottom];
+
+
+        margins.forEach((m) => {
+            marginH += Number(m.slice(0, -2));
+        });
+
+        var maxH = cardH - imgH - titleH - marginH;
+
+        var lineH = Number(briefCSS.lineHeight.slice(0, -2));
+        maxH = Math.ceil(maxH / lineH) * lineH;
+
+        briefDiv.style.maxHeight = `${maxH}px`;
+        // console.log(`${cardH - imgH - titleH}px`);
+
+
+    });
+
+
 }
 
 function constructSourcedNewsItem(source, resp) {
@@ -92,7 +133,7 @@ function constructNewscard(title, brief, extUrl, imgUrl) {
 
     var briefDiv = document.createElement("div");
     briefDiv.className = "brief";
-    briefDiv.innerHTML = brief;
+    briefDiv.innerHTML = brief + "[]" + brief; //TODO: remove test
 
     anchor.appendChild(img);
     anchor.appendChild(titleDiv);

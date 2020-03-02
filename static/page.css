@@ -50,11 +50,13 @@ html {
 
 
 #google-news {
-    display: none;
+    /*display: none;*/
+    display: block;
 }
 
 #search-form-div {
-    display: block;
+    /*display: ;*/
+    display: none;
 }
 
 
@@ -284,6 +286,7 @@ hr {
     border-radius: 5px;
     /*border: 1px solid rgba(128, 128, 128, 0.18);*/
     background-color: #f3f3f3;
+    overflow: hidden;
 }
 
 /*.newscard a {*/
@@ -297,6 +300,13 @@ hr {
     border-radius: 5px;
 }
 
+.newscard .newscard-descript-div{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+}
+
 .newscard .title {
     width: auto;
     /*font-family: Times;*/
@@ -307,6 +317,7 @@ hr {
 }
 
 .newscard .brief {
+    /*flex: 1;*/
     font-size: 12px;
     font-family: Times;
     text-align: center;
@@ -314,6 +325,10 @@ hr {
     margin: 7px 3px;
     overflow: hidden;
     object-fit: cover;
+    /*padding-bottom: 0.1px;*/
+    overflow-wrap: break-word;
+    line-height: 14px;
+
 }
 
 .search-div {
