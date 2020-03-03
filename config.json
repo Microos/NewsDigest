@@ -3,5 +3,5 @@
   "news_api_key": "7058a6a198064adca3c434149ce4e87b",
   "port": 8888,
   "stopwords_path": "stopwords_en.txt",
-  "debug": "true"
+  "debug": "false"
 }
