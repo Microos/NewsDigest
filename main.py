@@ -75,9 +75,7 @@ def wordcloud():
     return jsonify(resp)
 
 
-
-
 if __name__ == "__main__":
     config = get_config()
     CORS(app)
-    app.run(host='0.0.0.0', port=config.port, debug=config.debug) #TODO: rm debug
+    app.run(host='0.0.0.0', port=config.port, debug=config.debug)

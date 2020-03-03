@@ -27,8 +27,13 @@ def get_slideshow_data(cnt):
 
 def __postprocess_articles(resp, cnt):
     ret_list = []
+    title_set = set()
     for art in resp['content']['articles']:
         if len(ret_list) == cnt: break
+        if art['title'] in title_set:
+            continue
+        else:
+            title_set.add(art['title'])
 
         if not validate_dict(art):
             continue

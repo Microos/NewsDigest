@@ -10,12 +10,26 @@ const fromDateSelector = document.getElementById("from-date-selector");
 const toDateSelector = document.getElementById("to-date-selector");
 
 function resetSearchForm() {
+    var formatDateString = (d) => {
+        var year = d.getFullYear();
+        var month = d.getMonth() + 1;
+        var day = d.getDay() + 1;
+
+        month = month <= 9 ? '0' + month : month;
+        day = day <= 9 ? '0' + day : day;
+
+
+        var ret = `${year}-${month}-${day}`;
+        // console.log(d);
+        return ret;
+    };
 
     // set date
     var today = new Date();
-    var maxDateStr = today.toISOString().substr(0, 10);
-    today.setDate(today.getDate() - 29);
-    var minDateStr = today.toISOString().substr(0, 10);
+    var maxDateStr = formatDateString(today);
+
+    today.setDate(today.getDate() - 7);
+    var minDateStr = formatDateString(today);
 
     keywordTextbox.value = "";
     fromDateSelector.value = minDateStr;

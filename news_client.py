@@ -73,7 +73,7 @@ class NewsClient:
                                                language=language, page_size=page_size, page=page)
 
     @safe_api_request
-    def request_articals(self, q, sources, from_date, to_date, domains=None, language='en', sort_by='relevancy',
+    def request_articals(self, q, sources, from_date, to_date, domains=None, language='en', sort_by='publishedAt',
                          page=1, page_size=30):
 
         return self.__client.get_everything(q=q, sources=sources, domains=domains, from_param=from_date,
