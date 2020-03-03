@@ -434,7 +434,7 @@ hr {
 #select-search-category, #select-search-source {
     width: 150px;
     text-align: center;
-    text-align-last:center;
+    text-align-last: center;
     height: 20px;
     font-size: 11px;
 }
@@ -452,4 +452,116 @@ hr {
 .form-button-div button:hover {
     background-color: #4caf51 !important;
     color: white !important;
+}
+
+.search-result-div {
+    display: flex;
+    flex-direction: column;
+
+
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    border: 1px solid lightsteelblue;
+
+    align-items: center;
+}
+
+:root {
+    --result-descript-display: -webkit-box;
+    --result-simple-display: block;
+    --result-detail-display: none;
+
+
+    /*--result-descript-display: none;*/
+    /*--result-simple-display: none;*/
+    /*--result-detail-display: block;*/
+}
+
+.result-item {
+    min-height: 105px;
+    width: 85%;
+    margin: 5px 0;
+    background-color: #edeced;
+    border: 1px solid rgba(105, 105, 105, 0.32);
+    border-radius: 3px;
+    transition-duration: 0.2s;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.result-item:hover {
+    box-shadow: 0 10px 15px 2px rgba(105, 105, 105, 0.33);
+    cursor: pointer;
+}
+
+.result-item img {
+    align-self: flex-start;
+    object-fit: cover;
+    width: 65px;
+    height: 65px;
+    margin: 0 20px;
+    margin-top: 20px;
+}
+
+
+.result-item-description {
+    align-self: stretch;
+    /*border: 1px solid greenyellow;*/
+    height: auto;
+    width: 82%;
+    margin: 9px auto;
+    margin-right: 30px;
+    font-size: 12px;
+}
+
+
+.result-item-description .res-title {
+    /*always display title*/
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.result-item-description .res-descript {
+    display: var(--result-descript-display);
+    /*overflow: hidden;*/
+    /*overflow-wrap: break-word;*/
+    /*text-overflow: ellipsis;*/
+
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-right: 5px;
+    margin-top: 5px;
+}
+
+.result-item-description .res-info {
+    display: var(--result-detail-display);
+    margin-top: 5px;
+
+}
+
+.result-item-description .res-brief {
+    display: var(--result-detail-display);
+    margin-top: 7px;
+    margin-right: 5px;
+}
+
+.result-item-description .res-url {
+    display: var(--result-detail-display);
+    margin-top: 7px;
+}
+
+.result-item .close-mark {
+    display: var(--result-detail-display);
+    text-decoration: none;
+    color: inherit;
+    font-size: 20px;
+    margin-top: 6px;
+    margin-right: 7px;
+    height: 20px;
 }

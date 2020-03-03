@@ -8,6 +8,10 @@ news_client = NewsClient()
 config = get_config()
 
 
+def get_search_data(cnt):
+    pass
+
+
 def get_newscard_data(source, cnt):
     return __get_headlines_data(source=source, cnt=cnt)
 
@@ -61,7 +65,6 @@ def __get_headlines_data(source, cnt):
     return json_ret_dict
 
 
-# TODO: search
 def get_wordcloud_data(norm_min, norm_max):
     """
     Count words using top 30 headlines.
@@ -77,7 +80,7 @@ def get_wordcloud_data(norm_min, norm_max):
     (size is normalized)
     """
 
-    stopwords = config["stopwords"]
+    stopwords = config.stopwords
     # collect 100 headlines
     response = news_client.request_headlines(page_size=100)
     if (response['status'] != "ok"):

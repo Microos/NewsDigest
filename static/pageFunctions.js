@@ -8,6 +8,8 @@ function bodyOnloadCalls() {
     constructSourcedNewsItems();
     initSearchForm();
 
+    searchButtonOnclick();
+
     console.log("[INFO] <body> onload done.");
 }
 

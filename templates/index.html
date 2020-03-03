@@ -145,7 +145,7 @@
                     </div>
 
                     <div class="form-button-div">
-                        <button class="form-search-button" type="submit">Search</button>
+                        <button class="form-search-button" type="button" onclick="onSubmit(form)">Search</button>
                         <button class="form-clear-button" type="button" onclick="initSearchForm();">Clear</button>
                     </div>
 
@@ -153,9 +153,42 @@
                 </form>
             </div>
             <div class="search-result-div">
+                <div class="result-item">
+                    <img src="../static/headlinetest2.jpg" alt="ssc">
+                    <div class="result-item-description"></div>
+                </div>
 
 
+
+                <div class="result-item" data-current-state="collapsed" onclick="toggleResultCard(this, event);">
+                    <img src="../static/headlinetest3.jpg" alt="ssc">
+                    <div class="result-item-description">
+                        <div class="res-title">The stretchtretches the flextretchtake up thees the flextretchtake up
+                            thees the flextretchtake up thees the flextretchtake up thees the flextretchtake up the
+                            remaining space
+                        </div>
+
+                        <div class="res-descript"> value stretches the flex lines to take up the remaining space,
+                            The stretchxvaluestretches the flex lines to take up the remaining space. The stretch value
+                            stretches the flex lines to take up t
+                        </div>
+                        <div class="res-info"><strong>Author:</strong> Ajson Ayiss</div>
+                        <div class="res-info"><strong>Source:</strong> Csajhasdasdd.com</div>
+                        <div class="res-info"><strong>Date:</strong> 02/13/2020</div>
+
+                        <div class="res-brief">The stretch value stretches the flex lines to take up the remaining
+                            space,
+                            The stretch xvaluestretches the flex lines to take up the remaining space. The stretch value
+                            stretches the flex lines to take up the remaining space
+                        </div>
+                        <div class="res-url"><a href="http://www.google.com">See Original Post</a></div>
+
+                    </div>
+                    <a class="close-mark" onclick="toggleResultCard(this, event);">&times;</a>
+                </div>
             </div>
+
+
         </div>
 
     </div>

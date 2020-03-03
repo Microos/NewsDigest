@@ -62,5 +62,5 @@ def wordcloud():
 
 
 if __name__ == "__main__":
-    conf = get_config()
-    app.run(host='0.0.0.0', port=conf['port'], debug=conf['debug'])
+    config = get_config()
+    app.run(host='0.0.0.0', port=config.port, debug=config.debug)

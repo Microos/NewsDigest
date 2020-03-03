@@ -18,7 +18,7 @@ def safe_api_request(api_func):
         try:
             resp = api_func(self, *args, **kwargs)
 
-            ret = {'status':resp.pop('status'), 'err_code':None, 'err_msg':None, 'content': resp}
+            ret = {'status': resp.pop('status'), 'err_code': None, 'err_msg': None, 'content': resp}
             return ret
 
 
@@ -44,14 +44,14 @@ def safe_api_request(api_func):
 
 
 class NewsClient:
-    def __init__(self, config_file='./config.json'):
-        self.config_file = config_file
-        self.__client = self.__get_client(config_file)
+    def __init__(self):
+        self.config = get_config()
+        self.__client = self.__get_client()
 
-    def __get_client(self, config_file):
-        conf = get_config()
 
-        self.API_KEY = conf['news-api-key']
+    def __get_client(self):
+
+        self.API_KEY = self.config.news_api_key
         newsapi = NewsApiClient(api_key=self.API_KEY)
         return newsapi
 
