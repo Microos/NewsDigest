@@ -64,7 +64,6 @@ function changeSourceSelectOptions(category) {
                 if (resp.status != 'ok') {
                     logBadResponse(srcListUrl, resp);
                 } else {
-                    // const optionsFragment = document.createDocumentFragment();
                     var optionElements = [];
                     resp.content.forEach((source) => {
                         var opt = document.createElement("option");

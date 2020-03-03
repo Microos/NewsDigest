@@ -8,7 +8,6 @@ function bodyOnloadCalls() {
     constructSourcedNewsItems();
     resetSearchForm();
 
-    // searchButtonOnclick();
 
     console.log("[INFO] <body> onload done.");
 }
@@ -36,8 +35,9 @@ function gnewsButtonOnclick() {
         .getPropertyValue("--nav-button-inactive-textcolor");
 
 
+    //TODO: is this needed?
     // init the search from once the user leaves this section
-    resetSearchForm();
+    // resetSearchForm();
 
 
 }

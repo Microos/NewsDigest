@@ -26,7 +26,6 @@ function promisedConstructSourcedNewsItem(source) {
             if (this.readyState == 4) {
                 var resp = JSON.parse(this.responseText);
                 if (resp.status != 'ok') {
-                    // console.log(`Error:\n[${resp.status}]${resp.err_code};\n${resp.err_msg}`)
                     logBadResponse(newscardUrl, resp);
                 } else {
                     var sourcedNewsItem = constructSourcedNewsItem(source, resp);
@@ -56,7 +55,6 @@ function appendSourcedNewsItem(elm) {
         var titleDiv = card.getElementsByClassName("title")[0];
         var briefDiv = card.getElementsByClassName("brief")[0];
 
-        var cardCSS = window.getComputedStyle(card);
         var imgCSS = window.getComputedStyle(img);
         var titleCSS = window.getComputedStyle(titleDiv);
         var briefCSS = window.getComputedStyle(briefDiv);
@@ -80,8 +78,7 @@ function appendSourcedNewsItem(elm) {
         var lineH = Number(briefCSS.lineHeight.slice(0, -2));
 
         // method1: set '-webkit-line-clamp' to number of lines dynamically
-        var nLine = Math.ceil(maxH / lineH);
-        briefDiv.style['-webkit-line-clamp'] = nLine;
+        briefDiv.style['-webkit-line-clamp'] = Math.ceil(maxH / lineH);
 
 
         // method2: set maxHeight dynamically, then trigger overflow:hidden

@@ -60,7 +60,7 @@ def get_sources(category):
     # else return all sources
     all_sources = response['content']['sources']
 
-    ret_list = []  # {'id': 'all', 'name': 'all'}
+    ret_list = []
     if (category is None):
         indces = [5 * i for i in range(0, 10)]
         for idx in indces:
@@ -130,9 +130,6 @@ def get_wordcloud_data(norm_min, norm_max):
             x_std = (counter[key] - min_) / (max_ - min_)
             x_normed = x_std * (norm_max - norm_min) + norm_min
             fmt_counter.append({"word": key.capitalize(), "size": f'{x_normed: .3f}'})
-
-
-
     else:
 
         for key in top_keys:

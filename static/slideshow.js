@@ -10,7 +10,6 @@ var onshowSlideIndex = 0;
 
 
 // get slideshow
-
 function appendSlideshowItem(title, brief, extUrl, imgUrl) {
     const ssStack = document.getElementById("slideshow");
     var slideshowItem = document.createElement("div");
@@ -99,8 +98,6 @@ function constructSlideshowItems() {
 }
 
 // headline slideslow rolling
-
-
 function hideAllSlides() {
     var slideItems = document.getElementsByClassName("slideshow-item");
     for (var i = 0; i < slideItems.length; i++) {

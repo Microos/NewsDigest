@@ -14,13 +14,6 @@ function drawWordcloud() {
             var resp = JSON.parse(this.responseText);
             var wcDiv = document.getElementById('wordcloud');
             if (resp.status != 'ok') {
-                // no ok
-                // var msg = `err_code: ${resp.err_code}\nerr_msg : ${resp.err_msg}`;
-                // console.log(`Got server error from "${wordcloudUrl}"`);
-                // console.log(msg);
-                // console.log(' ---- end ----');
-                // wcDiv.innerText = "500: Server Error.\n" + msg;
-                // wcDiv.style.color = "red";
                 logBadResponse(wordcloudUrl, resp);
             } else {
                 data = resp.content;

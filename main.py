@@ -27,7 +27,7 @@ def search():
 
     resp = facade.get_search_data(q=keyword, from_date=from_date, to_date=to_date, source=source, cnt=cnt)
 
-    summary_response('/api/searchform/search', resp, request.form)
+    # summary_response('/api/searchform/search', resp, request.form)
 
     return jsonify(resp)
 
