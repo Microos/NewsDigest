@@ -50,6 +50,7 @@ function __drawWordcloud(myWords) {
         })      // font size of words
         .on("end", draw);
     layout.start();
+    document.getElementById("wordcloud").style.backgroundColor = "#f4f3f4";
 
 
 // This function takes the output of 'layout' above and draw the words

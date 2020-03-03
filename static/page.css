@@ -216,8 +216,6 @@ a.plain-anchor {
 
     width: var(--wordcloud-width);
     height: var(--headline-div-height);
-    background-color: #f4f3f4;
-    color: red;
 }
 
 .sourced-news-div {

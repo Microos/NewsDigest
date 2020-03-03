@@ -54,7 +54,6 @@ function onchangeCategorySelection(catSelect) {
 var sourceByCategory = {};
 
 function changeSourceSelectOptions(category) {
-    console.log(Object.keys(sourceByCategory));
     if (sourceByCategory[category] == undefined) {
         //no such a key, send request
         var xhr = new XMLHttpRequest();
@@ -243,7 +242,6 @@ function onSearchSubmit(form) {
 
     var postPayload = `q=${form.q.value}&fromDate=${form.fromDate.value}&toDate=${form.toDate.value}&source=${form.srcSelect.options[form.srcSelect.selectedIndex].value}&cnt=15`;
 
-    console.log(postPayload);
 
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
@@ -280,7 +278,6 @@ function onSearchSubmit(form) {
 }
 
 function toggleResultCard(element, event) {
-    console.log("toggleResultCard");
     var nextStateDict = {'expanded': "collapsed", "collapsed": "expanded"};
     var newState;
     var resultItem;
