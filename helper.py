@@ -1,9 +1,11 @@
 import datetime
-from prettytable import PrettyTable
 import re
+import simplejson as json
+
+from prettytable import PrettyTable
 
 
-def response_summary(endpoint, resp, form=None):
+def summary_response(endpoint, resp, form=None):
     table = PrettyTable()
     table.field_names = [f'{endpoint}']
 
@@ -36,4 +38,8 @@ def validate_dict(item):
 
 
 def news_content_cleanup(content_str):
-    return re.sub(r"\[\+\d+ chars\]|\r|\n|…", "", content_str)
+    return re.sub(r"\[\+\d+ chars\]|\r|\n", "", content_str)
+
+
+def jsonify(obj):
+    return json.dumps(obj, indent=4)

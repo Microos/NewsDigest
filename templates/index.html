@@ -32,75 +32,6 @@
 
             </div>
             <div class="sourced-news-div" id="sourced-news-div">
-                <div class="sourced-news-item">
-                    <div class="source-title">
-                        CNN
-                        <hr>
-                    </div>
-
-                    <div class="newscard-container">
-
-                        <div class="newscard">
-                            <a href="https://www.google.com" class="plain-anchor">
-                                <img src="../static/headlinetest1.jpg" alt="news image">
-
-                                <div class="newscard-descript-div">
-                                    <div class="title">Times New Roman. The geep tryine geep tryine geep trying and
-                                        trying
-                                        to voice the fear
-                                    </div>
-                                    <div class="brief">Instagram.com"We keep tr"We keep tr"We keep tr"We keep tr"We keep
-                                        tr"We keep tr"We keep tr"We keep tr"We keep tr
-                                        ying and trying to voice the fear, but we are
-                                        continuously hit with cog at them.' Itep tr"We keep tr"We keep tr"We keep tr"We
-                                        keep
-                                        tr"We keep tr"We keep tr"We keep tr"We keep tr
-                                        ying and trying to voice the fear, but we are
-                                        continuously hit with cog at them.' Its not fair that being a decent human
-                                        being and exe
-                                    </div>
-
-                                </div>
-
-
-                            </a>
-                        </div>
-                        <div class="newscard"></div>
-                        <div class="newscard"></div>
-                        <div class="newscard"></div>
-
-
-                    </div>
-
-
-                </div>
-                <div class="sourced-news-item">
-                    <div class="source-title">
-                        CNN
-                        <hr>
-                    </div>
-
-                    <div class="newscard-container">
-
-                        <div class="newscard">
-                            <a href="https://www.google.com" class="plain-anchor">
-                                <img src="../static/headlinetest1.jpg" alt="news image">
-                                <div class="title">Times New Roman. The geep trying and trying to voice the fear</div>
-                                <div class="brief">Instagram.com"We keep trying and trying to voice the fear, but we are
-                                    continuously hit with cog at them.' Its not fair that being a decent human
-                                    being and exe
-                                </div>
-                            </a>
-                        </div>
-                        <div class="newscard"></div>
-                        <div class="newscard"></div>
-                        <div class="newscard"></div>
-
-
-                    </div>
-
-
-                </div>
 
             </div>
 
@@ -112,13 +43,13 @@
             <div class="form-div">
                 <form class="search-form" id="search-form">
                     <div class="keyword-div">Keyword <label style="color: red;">*</label>
-                        <input class="textbox" id="keyword-textbox" required type="text">
+                        <input class="textbox" name="q" id="keyword-textbox" required type="text" value="virus">
                     </div>
                     <div class="from-div">From <label style="color: red;">*</label>
-                        <input class="textbox" id="from-date-selector" required type="date">
+                        <input class="textbox" name="fromDate" id="from-date-selector" required type="date">
                     </div>
                     <div class="to-div">To <label style="color: red;">*</label>
-                        <input class="textbox" id="to-date-selector" required type="date">
+                        <input class="textbox" name="toDate" id="to-date-selector" required type="date">
                     </div>
 
 
@@ -138,54 +69,22 @@
 
                     <div class="source-div">
                         <label for="select-search-source">Source</label>
-                        <select id="select-search-source">
-                            <option value="all" selected>all</option>
+                        <select id="select-search-source" name="srcSelect">
 
                         </select>
                     </div>
 
                     <div class="form-button-div">
-                        <button class="form-search-button" type="button" onclick="onSubmit(form)">Search</button>
-                        <button class="form-clear-button" type="button" onclick="initSearchForm();">Clear</button>
+                        <button class="form-search-button" type="button" onclick="onSearchSubmit(this.form)">Search
+                        </button>
+                        <button class="form-clear-button" type="button" onclick="resetSearchForm();">Clear</button>
                     </div>
 
 
                 </form>
             </div>
-            <div class="search-result-div">
-                <div class="result-item">
-                    <img src="../static/headlinetest2.jpg" alt="ssc">
-                    <div class="result-item-description"></div>
-                </div>
+            <div class="search-result-div" id="search-result-div">
 
-
-
-                <div class="result-item" data-current-state="collapsed" onclick="toggleResultCard(this, event);">
-                    <img src="../static/headlinetest3.jpg" alt="ssc">
-                    <div class="result-item-description">
-                        <div class="res-title">The stretchtretches the flextretchtake up thees the flextretchtake up
-                            thees the flextretchtake up thees the flextretchtake up thees the flextretchtake up the
-                            remaining space
-                        </div>
-
-                        <div class="res-descript"> value stretches the flex lines to take up the remaining space,
-                            The stretchxvaluestretches the flex lines to take up the remaining space. The stretch value
-                            stretches the flex lines to take up t
-                        </div>
-                        <div class="res-info"><strong>Author:</strong> Ajson Ayiss</div>
-                        <div class="res-info"><strong>Source:</strong> Csajhasdasdd.com</div>
-                        <div class="res-info"><strong>Date:</strong> 02/13/2020</div>
-
-                        <div class="res-brief">The stretch value stretches the flex lines to take up the remaining
-                            space,
-                            The stretch xvaluestretches the flex lines to take up the remaining space. The stretch value
-                            stretches the flex lines to take up the remaining space
-                        </div>
-                        <div class="res-url"><a href="http://www.google.com">See Original Post</a></div>
-
-                    </div>
-                    <a class="close-mark" onclick="toggleResultCard(this, event);">&times;</a>
-                </div>
             </div>
 
 

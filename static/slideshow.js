@@ -18,6 +18,7 @@ function appendSlideshowItem(title, brief, extUrl, imgUrl) {
 
     var anchorImage = document.createElement("a");
     anchorImage.href = extUrl;
+    anchorImage.target = "_blank";
 
     var image = document.createElement("img");
     image.src = imgUrl;
@@ -37,6 +38,7 @@ function appendSlideshowItem(title, brief, extUrl, imgUrl) {
     anchorTitle.className = 'plain-anchor';
     anchorTitle.href = extUrl;
     anchorTitle.innerText = title;
+    anchorTitle.target = "_blank";
 
     titleSubDiv.appendChild(anchorTitle);
     titleDiv.appendChild(titleSubDiv);
@@ -49,6 +51,7 @@ function appendSlideshowItem(title, brief, extUrl, imgUrl) {
     anchorBrief.className = 'plain-anchor';
     anchorBrief.href = extUrl;
     anchorBrief.innerText = brief;
+    anchorBrief.target = "_blank";
 
     briefSubDiv.appendChild(anchorBrief);
     briefDiv.appendChild(briefSubDiv);

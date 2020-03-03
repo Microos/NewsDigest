@@ -12,6 +12,14 @@ dict of 'status', 'content', 'err_code', 'err_msg' returned
 
 '''
 
+'''
+status: 
+    - ok
+    - value_error
+    - requests_error
+    - api_error
+    
+'''
 
 def safe_api_request(api_func):
     def func_wrapper(self, *args, **kwargs):
@@ -66,10 +74,10 @@ class NewsClient:
 
     @safe_api_request
     def request_articals(self, q, sources, from_date, to_date, domains=None, language='en', sort_by='relevancy',
-                         page=1):
+                         page=1, page_size=30):
 
         return self.__client.get_everything(q=q, sources=sources, domains=domains, from_param=from_date,
-                                            to=to_date, language=language, sort_by=sort_by, page=page)
+                                            to=to_date, language=language, sort_by=sort_by, page=page, page_size=page_size)
 
     def get_sources_list(self):
         ret_dict = self.get_sources()
@@ -106,11 +114,11 @@ class NewsClient:
         return self.request_headlines(q='123', sources='ab', category='business')
 
     def sample_artical_request(self):
-        return self.request_articals(q='bitcoin', sources=None, from_date='2020-01-01', to_date='2020-03-01')
+        return self.request_articals(q='virus', sources='cnn', from_date='2020-02-19', to_date='2020-03-01')
 
 
 if __name__ == '__main__':
     api = NewsClient()
-    r = api.get_sources()
+    r = api.sample_artical_request()
     print(r)
     print('Done')

@@ -6,9 +6,9 @@ function bodyOnloadCalls() {
     drawWordcloud();
     constructSlideshowItems();
     constructSourcedNewsItems();
-    initSearchForm();
+    resetSearchForm();
 
-    searchButtonOnclick();
+    // searchButtonOnclick();
 
     console.log("[INFO] <body> onload done.");
 }
@@ -37,7 +37,7 @@ function gnewsButtonOnclick() {
 
 
     // init the search from once the user leaves this section
-    initSearchForm();
+    resetSearchForm();
 
 
 }
@@ -59,7 +59,7 @@ function searchButtonOnclick() {
 
 }
 
-//helper function
+//helper functions
 function logBadResponse(apiUrl, resp) {
     var str = `Bad Response from: "${apiUrl}"\n
     status  : ${resp.status}\n
@@ -67,4 +67,6 @@ function logBadResponse(apiUrl, resp) {
     err_msg : ${resp.err_msg}\n`;
 
     console.log(str);
+
+    return str;
 }

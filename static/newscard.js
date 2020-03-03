@@ -125,6 +125,7 @@ function constructNewscard(title, brief, extUrl, imgUrl) {
     var anchor = document.createElement("a");
     anchor.href = extUrl;
     anchor.className = "plain-anchor";
+    anchor.target = "_blank";
 
     var img = document.createElement("img");
     img.src = imgUrl;

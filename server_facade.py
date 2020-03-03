@@ -1,15 +1,20 @@
 from news_client import NewsClient
 from config import get_config
 from helper import validate_dict, news_content_cleanup
-import simplejson as json
 import re
 
 news_client = NewsClient()
 config = get_config()
 
 
-def get_search_data(cnt):
-    pass
+def get_search_data(q, source, from_date, to_date, cnt):
+    response = news_client.request_articals(q=q, sources=source, from_date=from_date, to_date=to_date, page_size=100)
+    if (response['status'] != 'ok'):
+        return response
+
+    ret_list = __postprocess_articles(response, cnt)
+    ret_dict = {'status': 'ok', 'err_code': None, 'err_msg': None, 'content': ret_list}
+    return ret_dict
 
 
 def get_newscard_data(source, cnt):
@@ -20,11 +25,36 @@ def get_slideshow_data(cnt):
     return __get_headlines_data(source=None, cnt=cnt)
 
 
+def __postprocess_articles(resp, cnt):
+    ret_list = []
+    for art in resp['content']['articles']:
+        if len(ret_list) == cnt: break
+
+        if not validate_dict(art):
+            continue
+
+        art['content'] = news_content_cleanup(art['content'])
+        ret_list.append(art)
+    return ret_list
+
+
+def __get_headlines_data(source, cnt):
+    response = news_client.request_headlines(sources=source, page_size=100)
+    if (response['status'] != "ok"):
+        # directly return the error msg to the front end
+        return response
+
+    ret_list = __postprocess_articles(response, cnt)
+
+    ret_dict = {'status': 'ok', 'err_code': None, 'err_msg': None, 'content': ret_list}
+    return ret_dict
+
+
 def get_sources(category):
     response = news_client.get_sources(category)
     if (response['status'] != "ok"):
         # directly return the error msg to the front end
-        return json.dumps(response, indent=4)
+        return response
 
     # if category is None, return 10 sources
     # else return all sources
@@ -40,29 +70,7 @@ def get_sources(category):
             ret_list.append({'id': src['id'], 'name': src['name']})
 
     ret_dict = {'status': 'ok', 'err_code': None, 'err_msg': None, 'content': ret_list}
-    json_ret_dict = json.dumps(ret_dict, indent=4)
-    return json_ret_dict
-
-
-def __get_headlines_data(source, cnt):
-    response = news_client.request_headlines(sources=source, page_size=100)
-    if (response['status'] != "ok"):
-        # directly return the error msg to the front end
-        return json.dumps(response, indent=4)
-
-    ret_list = []
-    for art in response['content']['articles']:
-        if len(ret_list) == cnt: break
-
-        if not validate_dict(art):
-            continue
-
-        art['content'] = news_content_cleanup(art['content'])
-        ret_list.append(art)
-
-    ret_dict = {'status': 'ok', 'err_code': None, 'err_msg': None, 'content': ret_list}
-    json_ret_dict = json.dumps(ret_dict, indent=4)
-    return json_ret_dict
+    return ret_dict
 
 
 def get_wordcloud_data(norm_min, norm_max):
@@ -85,7 +93,7 @@ def get_wordcloud_data(norm_min, norm_max):
     response = news_client.request_headlines(page_size=100)
     if (response['status'] != "ok"):
         # directly return the error msg to the front end
-        return json.dumps(response, indent=4)
+        return response
 
     patt = re.compile('[^\w ]')
 
@@ -131,8 +139,7 @@ def get_wordcloud_data(norm_min, norm_max):
             fmt_counter.append({"word": key.capitalize(), "size": f'{counter[key]}'})
 
     ret_dict = {'status': 'ok', 'err_code': None, 'err_msg': None, 'content': fmt_counter}
-    json_ret_dict = json.dumps(ret_dict, indent=4)
-    return json_ret_dict
+    return ret_dict
 
 
 if __name__ == '__main__':
