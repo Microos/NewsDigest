@@ -1,12 +1,12 @@
 // List of words
-var wordsPadding = 3;
+var wordsPadding = 1;
 var fontSizeUpScale = 1;
 var wordcloudUrl = serverAddr + "/api/wordcloud";
 
 function drawWordcloud() {
 
-    var normMin = 15;
-    var normMax = 35;
+    var normMin = 17;
+    var normMax = 36;
 
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
@@ -67,7 +67,7 @@ function __drawWordcloud(myWords) {
             })
             .style("fill", "black")
             .attr("text-anchor", "middle")
-            .style("font-family", "impact").style("font-weight", "normal")
+            .style("font-family", "Impact").style("font-weight", "normal")
             .attr("transform", function (d) {
                 return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
             })
