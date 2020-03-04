@@ -7,12 +7,15 @@ from flask_cors import CORS
 from helper import summary_response, jsonify
 import server_facade as facade
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return app.send_static_file('index.html')
+
+
+# return render_template('index.html')
 
 
 @app.route('/api/searchform/search', methods=['POST'])
@@ -73,6 +76,11 @@ def wordcloud():
     # summary_response('/api/wordcloud', resp, request.form)
 
     return jsonify(resp)
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return app.send_static_file('error.html'), 404
 
 
 if __name__ == "__main__":

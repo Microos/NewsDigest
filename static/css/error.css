@@ -1,0 +1,40 @@
+.main-div {
+    margin: auto auto;
+    margin-top: 100px;
+    width: 450px;
+    height: 320px;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.img {
+    width: 100%;
+    height: 80%;
+    object-fit: cover;
+    border-radius: 10px;
+    transition-duration: 0.2s;
+}
+
+.img:hover {
+    box-shadow: 10px 10px 10px 0 rgba(128, 128, 128, 0.2);
+}
+
+.info {
+    text-align: center;
+    margin: auto -25%;
+    margin-top: 20px;
+    font-family: Times;
+    font-size: 20px;
+    font-weight: bold;
+    width: 150%;
+    transition-duration: 1.5s;
+}
+
+.info:hover {
+    color: rgba(128, 128, 128, 0);
+    text-shadow: 1px -1px #57bcff;
+
+}

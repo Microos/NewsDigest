@@ -22,18 +22,23 @@ def summary_response(endpoint, resp, form=None):
     print(table)
 
 
-def validate_dict(item):
-    for k, v in item.items():
+def validate_dict(item, keys=None):
+    check_keys = item.keys() if not keys else keys
+
+    for k in check_keys:
+
         if item[k] is None:
-            return False
+            return f'({k})[{item[k]}]'
 
         if (type(item[k])) == str and (item[k] in ['', 'null']):
-            return False
+            return f'({k})[{item[k]}]'
 
-        if type(item[k]) == dict and not validate_dict(item[k]):
-            return False
+        if type(item[k]) == dict:
+            res = validate_dict(item[k])
+            if (res is not None):
+                return f'({k}){res}'
 
-    return True
+    return None
 
 
 def news_content_cleanup(content_str):

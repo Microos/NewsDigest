@@ -13,15 +13,14 @@ function resetSearchForm() {
     var formatDateString = (d) => {
         var year = d.getFullYear();
         var month = d.getMonth() + 1;
-        var day = d.getDay() + 1;
+        var day = d.getDate();
 
         month = month <= 9 ? '0' + month : month;
         day = day <= 9 ? '0' + day : day;
 
 
-        var ret = `${year}-${month}-${day}`;
+        return  `${year}-${month}-${day}`;
         // console.log(d);
-        return ret;
     };
 
     // set date

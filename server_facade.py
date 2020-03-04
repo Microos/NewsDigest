@@ -29,17 +29,25 @@ def __postprocess_articles(resp, cnt):
     ret_list = []
     title_set = set()
     for art in resp['content']['articles']:
-        if len(ret_list) == cnt: break
+        if len(ret_list) == cnt:
+            break
         if art['title'] in title_set:
-            continue
-        else:
-            title_set.add(art['title'])
-
-        if not validate_dict(art):
+            print(f'len(ret_list)={len(ret_list)}')
+            print(f'len(title_set) = {len(title_set)}')
+            print(f'title_set = {title_set}')
             continue
 
-        art['content'] = news_content_cleanup(art['content'])
+        check_keys = {'author', 'description', 'title', 'url',
+                      'urlToImage', 'publishedAt', 'source'}
+        if validate_dict(art, check_keys) is not None:
+            continue
+
+        if validate_dict(art, ['content']) is None:
+            art['content'] = news_content_cleanup(art['content'])
+
+        title_set.add(art['title'])
         ret_list.append(art)
+
     return ret_list
 
 
@@ -50,7 +58,8 @@ def __get_headlines_data(source, cnt):
         return response
 
     ret_list = __postprocess_articles(response, cnt)
-
+    if (len(ret_list) < cnt):
+        print(f"No Enough Valid Headlines (src: {str(source)}): {len(ret_list)}/{cnt}")
     ret_dict = {'status': 'ok', 'err_code': None, 'err_msg': None, 'content': ret_list}
     return ret_dict
 

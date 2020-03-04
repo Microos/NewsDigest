@@ -111,7 +111,7 @@ class NewsClient:
 
     # Test methods
     def sample_headline_request(self):
-        return self.request_headlines(q='123', sources='ab', category='business')
+        return self.request_headlines(q=None, sources='cnn', page_size=30, page=1)
 
     def sample_artical_request(self):
         return self.request_articals(q='virus', sources='cnn', from_date='2020-02-19', to_date='2020-03-01')
@@ -119,6 +119,7 @@ class NewsClient:
 
 if __name__ == '__main__':
     api = NewsClient()
-    r = api.sample_artical_request()
-    print(r)
+    r = api.sample_headline_request()['content']['articles']
+    print(len(r))
+    print(r[0]['title'])
     print('Done')

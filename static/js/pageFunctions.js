@@ -1,7 +1,7 @@
 "use strict";
 
 var serverAddr = "http://192.168.238.132:8888";
-serverAddr = "http://h6.cmic.me";
+serverAddr = "http://a6.cmic.me";
 
 function bodyOnloadCalls() {
     drawWordcloud();
@@ -9,7 +9,7 @@ function bodyOnloadCalls() {
     constructSourcedNewsItems();
     resetSearchForm();
 
-
+    goodLuckHaveFun();
     console.log("[INFO] <body> onload done.");
 }
 
@@ -70,4 +70,16 @@ function logBadResponse(apiUrl, resp) {
     console.log(str);
 
     return str;
+}
+
+function goodLuckHaveFun() {
+
+    console.log("                                                                                                                      ");
+    console.log("     _/_/_/    _/_/_/    _/_/_/  _/_/_/  _/_/_/_/  _/_/_/_/_/    _/              _/    _/  _/          _/    _/_/_/   ");
+    console.log("  _/        _/        _/          _/    _/                _/  _/_/              _/    _/  _/          _/  _/          ");
+    console.log(" _/          _/_/    _/          _/    _/_/_/          _/      _/  _/_/_/_/_/  _/_/_/_/  _/    _/    _/  _/_/_/       ");
+    console.log("_/              _/  _/          _/          _/      _/        _/              _/    _/    _/  _/  _/    _/    _/      ");
+    console.log(" _/_/_/  _/_/_/      _/_/_/  _/_/_/  _/_/_/      _/          _/              _/    _/      _/  _/        _/_/         ");
+    console.log("                                                                                                                      ");
+
 }
