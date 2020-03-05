@@ -86,9 +86,10 @@ def page_not_found(e):
 if __name__ == "__main__":
     config = get_config()
     parser = ArgumentParser(description="CSCI571-Homework6 News website server backend.")
-    parser.add_argument('--port', dest="port", action='store', help="Run server at a port number.", type=int,
+    parser.add_argument('--port', '-p', dest="port", action='store', help="Run server at a port number.", type=int,
                         default=config.port)
-    parser.add_argument('--debug', dest="debug", action='store_true', help="Either run the server at flask debug mode.",
+    parser.add_argument('--debug', '-d', dest="debug", action='store_true',
+                        help="Either run the server at flask debug mode.",
                         default=config.debug)
 
     args = parser.parse_args()
