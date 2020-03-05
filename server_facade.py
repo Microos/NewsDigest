@@ -32,9 +32,6 @@ def __postprocess_articles(resp, cnt):
         if len(ret_list) == cnt:
             break
         if art['title'] in title_set:
-            print(f'len(ret_list)={len(ret_list)}')
-            print(f'len(title_set) = {len(title_set)}')
-            print(f'title_set = {title_set}')
             continue
 
         check_keys = {'author', 'description', 'title', 'url',

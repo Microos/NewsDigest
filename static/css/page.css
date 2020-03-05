@@ -115,6 +115,7 @@ a.plain-anchor {
 .content-div {
     margin-left: calc(var(--nav-sidebar-width) + var(--hortizontal-split-width));
     border: 0;
+    margin-bottom: 20px;
 }
 
 
@@ -244,7 +245,7 @@ hr {
     margin-bottom: 13px;
     margin-left: 5px;
     margin-right: 4px;
-    border-top: 1px dotted rgba(0, 0, 0, 0.7);
+    border-top: 1px dotted rgba(0, 0, 0, 0.62);
     /*border-bottom: 2px solid rgba(0, 0, 0, 0.5);*/
 }
 
@@ -328,6 +329,7 @@ hr {
     grid-template-rows: repeat(3, 25%);
     align-items: center;
     align-content: space-evenly;
+    justify-content: space-evenly;
     width: 100%;
     height: 100%;
 }
@@ -503,11 +505,12 @@ hr {
 .result-item-description .res-descript {
     display: var(--result-descript-display);
 
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
+    /*-webkit-line-clamp: 1;*/
+    /*-webkit-box-orient: vertical;*/
     overflow: hidden;
     margin-right: 5px;
     margin-top: 5px;
+    /*width: 475px;*/
 }
 
 .result-item-description .res-info {
@@ -550,6 +553,7 @@ hr {
     width: 110px;
     text-align: center;
     font-family: SansSerif georgia;
+    background-color: var(--nav-button-inactive-bgcolor);
 }
 
 .more-less-button:hover {

@@ -40,7 +40,7 @@
 
         <div class="search-div" id="search-form-div">
             <div class="form-div">
-                <form class="search-form" id="search-form">
+                <form class="search-form" id="search-form" onsubmit="onSearchSubmit(this); return false;">
                     <div class="keyword-div">Keyword <label style="color: red;">*</label>
                         <input class="textbox" name="q" id="keyword-textbox" required type="text" value="virus">
                     </div>

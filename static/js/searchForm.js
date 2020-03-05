@@ -19,7 +19,7 @@ function resetSearchForm() {
         day = day <= 9 ? '0' + day : day;
 
 
-        return  `${year}-${month}-${day}`;
+        return `${year}-${month}-${day}`;
         // console.log(d);
     };
 
@@ -152,6 +152,76 @@ function newMoreLessButton() {
 
 }
 
+
+var context = document.createElement("canvas").getContext("2d");
+
+
+function injectOnelineEllipsisedString(description, elm) {
+    var calcTextWidth = (text, font) => {
+        context.font = font;
+
+        return context.measureText(text).width;
+    };
+
+
+    // get text area max-width
+    var css = window.getComputedStyle(elm);
+    var maxW = Number(css.width.slice(0, -2)) - 1;
+    var font = `${css.fontWeight} ${css.fontSize} ${css.fontFamily}`;
+    if (calcTextWidth(description, font) <= maxW) {
+        elm.innerHTML = description;
+    }
+
+    // split string into words to prevent break into words
+    var lst = description.split(' ');
+    if (lst[lst.length - 1] == "…") {
+        lst = lst.slice(0, -1);
+    }
+
+
+    // binary search floor finding best text length that fit in the div
+    var lo = 0;
+    var hi = lst.length;
+
+
+    var txt = null;
+    while (lo <= hi) {
+        // right point of mid
+        var mid = lo + Math.floor((hi - lo) / 2);
+        txt = lst.slice(0, mid).join(" ") + "…";
+        var w = calcTextWidth(txt, font);
+
+        if (w == maxW) {
+            break;
+        }
+        if (w < maxW) {
+            if (mid + 1 > hi) break;
+
+            var txt1 = lst.slice(0, mid + 1).join(" ") + "…";
+            if (calcTextWidth(txt1, font) > maxW) break;
+
+            lo = mid + 1;
+        } else {
+            hi = mid - 1;
+        }
+    }
+
+    if (txt == null) {
+        console.log("cannot calculate best width");
+        return;
+    }
+
+    elm.innerHTML = txt;
+    var originalTextDiv = document.createElement("div");
+    originalTextDiv.innerHTML = description;
+    originalTextDiv.style.display = "none";
+    originalTextDiv.className = "original-description";
+
+    elm.parentElement.insertBefore(originalTextDiv, elm.nextSibling);
+
+
+}
+
 function appendResults(resp) {
     for (var i = 0; i < resp.content.length; i++) {
         var res = resp.content[i];
@@ -179,7 +249,7 @@ function appendResults(resp) {
 
         var resOnelineDescriptDiv = document.createElement("div");
         resOnelineDescriptDiv.className = "res-descript";
-        resOnelineDescriptDiv.innerHTML = res.description;
+        // resOnelineDescriptDiv.innerHTML = res.description; // TODO
 
         var authorDiv = document.createElement("div");
         authorDiv.className = "res-info";
@@ -219,12 +289,13 @@ function appendResults(resp) {
         resItemDiv.appendChild(closeBtn);
 
 
+        // append this item to result display div
+        searchResultDiv.appendChild(resItemDiv);
+        injectOnelineEllipsisedString(res.description, resOnelineDescriptDiv);
         if (i >= 5) {
             resItemDiv.style.display = "none";
         }
 
-        // append this item to result display div
-        searchResultDiv.appendChild(resItemDiv);
     }
 
     // append show more btn
@@ -247,6 +318,7 @@ function validateForm(form) {
 
     return true;
 }
+
 
 function onSearchSubmit(form) {
     if (!validateForm(form)) {

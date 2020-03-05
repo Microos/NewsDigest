@@ -1,7 +1,7 @@
 "use strict";
 
-var serverAddr = "http://192.168.238.132:8888";
-serverAddr = "http://a6.cmic.me";
+// var serverAddr = "http://192.168.238.132:8888";
+var serverAddr = "";
 
 function bodyOnloadCalls() {
     drawWordcloud();

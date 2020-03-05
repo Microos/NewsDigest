@@ -1,11 +1,12 @@
 // List of words
-var wordsPadding = 1;
-var fontSizeUpScale = 1;
 var wordcloudUrl = serverAddr + "/api/wordcloud";
+var wordsPadding = 1.2;
+var fontSizeUpScale = 1;
+
 
 function drawWordcloud() {
 
-    var normMin = 17;
+    var normMin = 14;
     var normMax = 36;
 
     var xhr = new XMLHttpRequest();

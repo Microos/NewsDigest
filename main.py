@@ -1,9 +1,9 @@
-from flask import Flask
-from flask import render_template
-from flask import request
+#! /usr/bin/env python3
 
+from argparse import ArgumentParser
+from flask import Flask
+from flask import request
 from config import get_config
-from flask_cors import CORS
 from helper import summary_response, jsonify
 import server_facade as facade
 
@@ -85,5 +85,14 @@ def page_not_found(e):
 
 if __name__ == "__main__":
     config = get_config()
-    CORS(app)
+    parser = ArgumentParser(description="CSCI571-Homework6 News website server backend.")
+    parser.add_argument('--port', dest="port", action='store', help="Run server at a port number.", type=int,
+                        default=config.port)
+    parser.add_argument('--debug', dest="debug", action='store_true', help="Either run the server at flask debug mode.",
+                        default=config.debug)
+
+    args = parser.parse_args()
+
+
+
     app.run(host='0.0.0.0', port=config.port, debug=config.debug)
