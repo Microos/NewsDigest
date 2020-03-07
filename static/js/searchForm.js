@@ -266,7 +266,7 @@ function appendResults(resp) {
 
         var briefDiv = document.createElement("div");
         briefDiv.className = "res-brief";
-        briefDiv.innerHTML = res.content;
+        briefDiv.innerHTML = res.description;
 
         var urlDiv = document.createElement("div");
         urlDiv.className = "res-url";

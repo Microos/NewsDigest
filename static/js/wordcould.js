@@ -1,6 +1,6 @@
 // List of words
 var wordcloudUrl = serverAddr + "/api/wordcloud";
-var wordsPadding = 1.2;
+var wordsPadding = 2.5;
 var fontSizeUpScale = 1;
 
 
@@ -46,7 +46,7 @@ function __drawWordcloud(myWords) {
         .rotate(function () {
             return ~~(Math.random() * 2) * 90;
         })
-        .fontSize(function (d) {
+        .font("Impact").fontSize(function (d) {
             return d.size;
         })      // font size of words
         .on("end", draw);

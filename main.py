@@ -4,7 +4,8 @@ from argparse import ArgumentParser
 from flask import Flask
 from flask import request
 from config import get_config
-from helper import summary_response, jsonify
+from helper import summary_response #, jsonify
+from flask import jsonify
 import server_facade as facade
 
 app = Flask(__name__, static_url_path='/static')
