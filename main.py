@@ -11,12 +11,16 @@ import server_facade as facade
 app = Flask(__name__, static_url_path='/static')
 
 
+@app.after_request
+def after_request(resp):
+    resp.headers["Cache-Control"] = "no-cache"
+    resp.headers["Pragma"] = "no-cache"
+    return resp
+
+
 @app.route('/')
 def index():
     return app.send_static_file('index.html')
-
-
-# return render_template('index.html')
 
 
 @app.route('/api/searchform/search', methods=['POST'])
@@ -94,5 +98,7 @@ if __name__ == "__main__":
                         default=config.debug)
 
     args = parser.parse_args()
+
+    print('[PY] argparse done.')  # a line of dummy change for gcp to flush proxy cache
 
     app.run(host='0.0.0.0', port=args.port, debug=args.debug)
