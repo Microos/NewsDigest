@@ -166,10 +166,13 @@ function injectOnelineEllipsisedString(description, elm) {
 
     // get text area max-width
     var css = window.getComputedStyle(elm);
-    var maxW = Number(css.width.slice(0, -2)) - 1;
-    var font = `${css.fontWeight} ${css.fontSize} ${css.fontFamily}`;
-    if (calcTextWidth(description, font) <= maxW) {
+    var maxW = Number(css.width.slice(0, -2));
+    var font = `${css.fontStyle} ${css.fontWeight} ${css.fontSize} ${css.fontFamily}`;
+    var fullLenght = calcTextWidth(description, font);
+
+    if (fullLenght <= maxW) {
         elm.innerHTML = description;
+        return;
     }
 
     // split string into words to prevent break into words
