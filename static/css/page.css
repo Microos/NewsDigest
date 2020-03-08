@@ -380,6 +380,10 @@ hr {
     grid-column: 3/ span 2;
 }
 
+.form-button-div button{
+    border-radius: 2px;
+}
+
 .form-search-button {
     margin-right: 10px;
 }

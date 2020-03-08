@@ -36,7 +36,6 @@ def __postprocess_articles(resp, cnt):
         if art['title'] in title_set:
             continue
 
-
         # check every key and subkeys
         check_keys = {'author', 'description', 'title', 'url',
                       'urlToImage', 'publishedAt', 'source'}
@@ -78,11 +77,14 @@ def get_sources(category):
     # else return all sources
     all_sources = response['content']['sources']
 
+    max_num_ret = 10
+
     ret_list = []
-    if (category is None):
-        indces = [5 * i for i in range(0, 10)]
-        for idx in indces:
-            ret_list.append({'id': all_sources[idx]['id'], 'name': all_sources[idx]['name']})
+    if (len(all_sources) > 10):
+        intv = len(all_sources) // max_num_ret
+        indces = [intv * i for i in range(0, 10)]
+        for i in indces:
+            ret_list.append({'id': all_sources[i]['id'], 'name': all_sources[i]['name']})
     else:
         for src in all_sources:
             ret_list.append({'id': src['id'], 'name': src['name']})
