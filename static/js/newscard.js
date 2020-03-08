@@ -24,13 +24,20 @@ function promisedConstructSourcedNewsItem(source) {
 
         xhr.onreadystatechange = function () {
             if (this.readyState == 4) {
-                var resp = JSON.parse(this.responseText);
-                if (resp.status != 'ok') {
-                    logBadResponse(newscardUrl, resp);
-                } else {
-                    var sourcedNewsItem = constructSourcedNewsItem(source, resp);
-                    resolve(sourcedNewsItem);
-                }
+                var pms = new Promise((resolve2, reject2) => {
+                    var resp = JSON.parse(this.responseText);
+                    resolve2(resp);
+                });
+
+                pms.then((resp) => {
+                    if (resp.status != 'ok') {
+                        logBadResponse(newscardUrl, resp);
+                    } else {
+                        var sourcedNewsItem = constructSourcedNewsItem(source, resp);
+                        resolve(sourcedNewsItem);
+                    }
+                });
+
             }
         };
         xhr.open('POST', newscardUrl, true);

@@ -34,7 +34,6 @@ function resetSearchForm() {
     keywordTextbox.value = "";
     fromDateSelector.value = minDateStr;
     toDateSelector.value = maxDateStr;
-    toDateSelector.max = maxDateStr;
 
 
     //blur focus of three inputs
@@ -73,23 +72,32 @@ function changeSourceSelectOptions(category) {
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
             if (this.readyState == 4) {
-                var resp = JSON.parse(this.responseText);
-                if (resp.status != 'ok') {
-                    logBadResponse(srcListUrl, resp);
-                } else {
-                    var optionElements = [];
-                    resp.content.forEach((source) => {
-                        var opt = document.createElement("option");
-                        opt.value = source.id;
-                        opt.innerHTML = source.name;
-                        optionElements.push(opt);
-                    });
+                var pms = new Promise((resolve, reject) => {
+                    var resp = JSON.parse(this.responseText);
+                    resolve(resp);
+                });
 
-                    sourceByCategory[category] = optionElements;
-                    optionElements.forEach((o) => {
-                        searchSourceSelect.appendChild(o);
-                    });
-                }
+
+                pms.then((resp) => {
+                    if (resp.status != 'ok') {
+                        logBadResponse(srcListUrl, resp);
+                    } else {
+                        var optionElements = [];
+                        resp.content.forEach((source) => {
+                            var opt = document.createElement("option");
+                            opt.value = source.id;
+                            opt.innerHTML = source.name;
+                            optionElements.push(opt);
+                        });
+
+                        sourceByCategory[category] = optionElements;
+                        optionElements.forEach((o) => {
+                            searchSourceSelect.appendChild(o);
+                        });
+                    }
+                });
+
+
             }
         };
         searchSourceSelect.innerText = "";
@@ -265,7 +273,11 @@ function appendResults(resp) {
 
         var dateDiv = document.createElement("div");
         dateDiv.className = "res-info";
-        dateDiv.innerHTML = `<strong>Date: </strong> ${res.publishedAt.match(/^\d{4}-\d{2}-\d{2}/)[0].replace(/-/g, "/")}`;
+        var ymd = res.publishedAt.match(/^\d{4}-\d{2}-\d{2}/)[0];
+        var sp = ymd.split('-');
+        var mdy = [sp[1], sp[2], sp[0]].join('/');
+
+        dateDiv.innerHTML = `<strong>Date: </strong> ${mdy}`;
 
 
         var briefDiv = document.createElement("div");
@@ -315,6 +327,7 @@ function validateForm(form) {
     var fromDate = new Date(form.fromDate.value).getTime();
     var toDate = new Date(form.toDate.value).getTime();
 
+
     if (fromDate > toDate) {
         alert("Incorrect time.");
         return false;
@@ -335,30 +348,35 @@ function onSearchSubmit(form) {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
-            var resp = JSON.parse(this.responseText);
-            if (resp.status != 'ok') {
-                var log = logBadResponse(searchUrl, resp);
-                if (resp.status == 'api_error') {
-                    var reg = / To extend.*$/;
-                    var msg = resp.err_msg.replace(reg, "");
-                    alert(msg);
+
+            var pms = new Promise((resolve, reject) => {
+                var resp = JSON.parse(this.responseText);
+                resolve(resp);
+            });
+
+
+            pms.then((resp) => {
+                if (resp.status != 'ok') {
+                    var log = logBadResponse(searchUrl, resp);
+                    if (resp.status == 'api_error') {
+                        alert(resp.err_msg);
+                    } else {
+                        alert(log);
+                    }
                 } else {
-                    alert(log);
+                    // clear previous content
+                    searchResultDiv.innerHTML = "";
+                    if (resp.content.length > 0) {
+                        // returned results
+                        appendResults(resp);
+                    } else {
+                        // no results
+                        searchResultDiv.appendChild(newNoResultDiv());
+                    }
                 }
-            } else {
-                // clear previous content
-                searchResultDiv.innerHTML = "";
+            });
 
 
-                if (resp.content.length > 0) {
-                    // returned results
-                    appendResults(resp);
-                } else {
-                    // no results
-                    searchResultDiv.appendChild(newNoResultDiv());
-                }
-
-            }
         }
     };
     xhr.open('POST', searchUrl, true);

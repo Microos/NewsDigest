@@ -29,14 +29,21 @@ def __postprocess_articles(resp, cnt):
     ret_list = []
     title_set = set()
     for art in resp['content']['articles']:
+
+        # print(art)
         if len(ret_list) == cnt:
             break
         if art['title'] in title_set:
             continue
 
+
+        # check every key and subkeys
         check_keys = {'author', 'description', 'title', 'url',
                       'urlToImage', 'publishedAt', 'source'}
-        if validate_dict(art, check_keys) is not None:
+        valid_res = validate_dict(art, check_keys)
+
+        if valid_res is not None:
+            # print(valid_res)
             continue
 
         if validate_dict(art, ['content']) is None:

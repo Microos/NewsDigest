@@ -12,14 +12,21 @@ function drawWordcloud() {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
-            var resp = JSON.parse(this.responseText);
-            var wcDiv = document.getElementById('wordcloud');
-            if (resp.status != 'ok') {
-                logBadResponse(wordcloudUrl, resp);
-            } else {
-                data = resp.content;
-                __drawWordcloud(data);
-            }
+            var pms = new Promise((resolve, reject) => {
+                var resp = JSON.parse(this.responseText);
+                resolve(resp);
+            });
+
+            pms.then((resp) => {
+                if (resp.status != 'ok') {
+                    logBadResponse(wordcloudUrl, resp);
+                } else {
+                    data = resp.content;
+                    __drawWordcloud(data);
+                }
+            });
+
+
         }
     };
     xhr.open("POST", wordcloudUrl, true);

@@ -74,19 +74,26 @@ function constructSlideshowItems() {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
-            var resp = JSON.parse(this.responseText);
-            // removeAllSlideShowItems();
-            if (resp.status != 'ok') {
-                appendSlideshowItem(`[${this.status}]` + resp.err_code, resp.err_msg, "", '../static/error.jpg');
-                logBadResponse(headlineSlideShowUrl, resp);
-            } else {
-                var list = resp.content;
-                for (var i = 0; i < list.length; i++) {
-                    var item = list[i];
-                    appendSlideshowItem(item.title, item.description, item.url, item.urlToImage);
+            var pms = new Promise((resolve, reject) => {
+                var resp = JSON.parse(this.responseText);
+                resolve(resp);
+            });
+
+            pms.then((resp) => {
+                if (resp.status != 'ok') {
+                    appendSlideshowItem(`[${this.status}]` + resp.err_code, resp.err_msg, "", '../static/error.jpg');
+                    logBadResponse(headlineSlideShowUrl, resp);
+                } else {
+                    var list = resp.content;
+                    for (var i = 0; i < list.length; i++) {
+                        var item = list[i];
+                        appendSlideshowItem(item.title, item.description, item.url, item.urlToImage);
+                    }
                 }
-            }
-            showSlides();
+                showSlides();
+            });
+
+
         }
     };
 

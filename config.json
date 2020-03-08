@@ -1,6 +1,6 @@
 {
-  "news_api_key": "d3f953a0d56e4d88be832ce8716beb83",
-  "news_api_key2": "7058a6a198064adca3c434149ce4e87b",
+  "news_api_key2": "d3f953a0d56e4d88be832ce8716beb83",
+  "news_api_key": "7058a6a198064adca3c434149ce4e87b",
   "port": 80,
   "stopwords_path": "stopwords_en.txt",
   "debug": false

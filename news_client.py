@@ -65,7 +65,7 @@ class NewsClient:
 
     @safe_api_request
     def get_sources(self, category=None):
-        return self.__client.get_sources(category=category)
+        return self.__client.get_sources(category=category, language='en', country='us')
 
     @safe_api_request
     def request_headlines(self, q=None, sources=None, category=None, page_size=30, page=1, language='en'):
