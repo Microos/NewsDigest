@@ -13,7 +13,7 @@ app = Flask(__name__, static_url_path='/static')
 
 @app.after_request
 def after_request(resp):
-    resp.headers["Cache-Control"] = "no-cache"
+    resp.headers["Cache-Control"] = "no-store"
     resp.headers["Pragma"] = "no-cache"
     return resp
 
@@ -62,9 +62,12 @@ def newscard():
     return jsonify(resp)
 
 
-@app.route('/api/headlines/slideshow', methods=['POST'])
+@app.route('/api/headlines/slideshow', methods=['GET', 'POST'])
 def slideshow():
-    cnt = int(request.form.get('cnt', 5))
+    if request.method == 'POST':
+        cnt = int(request.form.get('cnt', 5))
+    else:  # assuming GET
+        cnt = int(request.args.get('cnt', 5))
     resp = facade.get_slideshow_data(cnt)
 
     # summary_response('/api/headlines/slideshow', resp, request.form)
@@ -72,10 +75,14 @@ def slideshow():
     return jsonify(resp)
 
 
-@app.route('/api/wordcloud', methods=['POST'])
+@app.route('/api/wordcloud', methods=['GET', 'POST'])
 def wordcloud():
-    norm_min = request.form.get('normMin', 0)
-    norm_max = request.form.get('normMax', 0)
+    if request.method == 'POST':
+        norm_min = request.form.get('normMin', 0)
+        norm_max = request.form.get('normMax', 0)
+    else:  # assuming GET
+        norm_min = request.args.get('min', 0)
+        norm_max = request.args.get('max', 0)
 
     resp = facade.get_wordcloud_data(int(norm_min), int(norm_max))
     # summary_response('/api/wordcloud', resp, request.form)

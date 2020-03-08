@@ -1,6 +1,6 @@
 "use strict";
 
-// addresses3
+// addresses00
 var srcListUrl = serverAddr + "/api/searchform/sources";
 var searchUrl = serverAddr + "/api/searchform/search";
 
