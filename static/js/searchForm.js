@@ -312,7 +312,7 @@ function validateForm(form) {
     var toDate = new Date(form.toDate.value).getTime();
 
     if (fromDate > toDate) {
-        alert("Incorrect dates selected.");
+        alert("Incorrect time.");
         return false;
     }
 

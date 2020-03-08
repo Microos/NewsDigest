@@ -4,7 +4,7 @@ from argparse import ArgumentParser
 from flask import Flask
 from flask import request
 from config import get_config
-from helper import summary_response #, jsonify
+from helper import summary_response
 from flask import jsonify
 import server_facade as facade
 
@@ -90,7 +90,7 @@ if __name__ == "__main__":
     parser.add_argument('--port', '-p', dest="port", action='store', help="Run server at a port number.", type=int,
                         default=config.port)
     parser.add_argument('--debug', '-d', dest="debug", action='store_true',
-                        help="Either run the server at flask debug mode.",
+                        help="Whether run the server at flask debug mode.",
                         default=config.debug)
 
     args = parser.parse_args()
