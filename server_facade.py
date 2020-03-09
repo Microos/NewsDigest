@@ -1,18 +1,41 @@
 from news_client import NewsClient
 from config import get_config
 from helper import validate_dict, news_content_cleanup
+from functools import partial
 import re
 
 news_client = NewsClient()
 config = get_config()
 
+default_check_keys = ('author', 'description', 'title', 'url',
+                      'urlToImage', 'publishedAt', 'source')
+
+
+def search_validator(item):
+    search_check_keys = ('author', 'description', 'title', 'url',
+                         'urlToImage', 'publishedAt')
+    res = validate_dict(item, search_check_keys)
+    if res is not None:
+        return res
+
+    if 'source' not in item.keys():
+        return '(source):[nokey]'
+
+    if 'name' not in item['source'].keys():
+        return '(source):(name):[nokey]'
+
+    if item['source']['name'] in ['null', '']:
+        return f"source:name:{item['source']['name']}"
+
+    return None
+
 
 def get_search_data(q, source, from_date, to_date, cnt):
-    response = news_client.request_articals(q=q, sources=source, from_date=from_date, to_date=to_date, page_size=100)
+    response = news_client.request_articals(q=q, sources=source, from_date=from_date, to_date=to_date, page_size=30)
     if (response['status'] != 'ok'):
         return response
 
-    ret_list = __postprocess_articles(response, cnt)
+    ret_list = __postprocess_articles(response, cnt, search_validator)
     ret_dict = {'status': 'ok', 'err_code': None, 'err_msg': None, 'content': ret_list}
     return ret_dict
 
@@ -25,9 +48,9 @@ def get_slideshow_data(cnt):
     return __get_headlines_data(source=None, cnt=cnt)
 
 
-def __postprocess_articles(resp, cnt):
+def __postprocess_articles(resp, cnt, validator):
     ret_list = []
-    title_set = set()
+    title_set = set()  # remove duplicates
     for art in resp['content']['articles']:
 
         # print(art)
@@ -37,9 +60,7 @@ def __postprocess_articles(resp, cnt):
             continue
 
         # check every key and subkeys
-        check_keys = {'author', 'description', 'title', 'url',
-                      'urlToImage', 'publishedAt', 'source'}
-        valid_res = validate_dict(art, check_keys)
+        valid_res = validator(art)
 
         if valid_res is not None:
             # print(valid_res)
@@ -60,7 +81,7 @@ def __get_headlines_data(source, cnt):
         # directly return the error msg to the front end
         return response
 
-    ret_list = __postprocess_articles(response, cnt)
+    ret_list = __postprocess_articles(response, cnt, validator=partial(validate_dict, keys=default_check_keys))
     if (len(ret_list) < cnt):
         print(f"No Enough Valid Headlines (src: {str(source)}): {len(ret_list)}/{cnt}")
     ret_dict = {'status': 'ok', 'err_code': None, 'err_msg': None, 'content': ret_list}

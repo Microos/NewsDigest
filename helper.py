@@ -26,6 +26,8 @@ def validate_dict(item, keys=None):
     check_keys = item.keys() if not keys else keys
 
     for k in check_keys:
+        if k not in item.keys():
+            return f'({k}):[nokey]'
 
         if item[k] is None:
             return f'({k})[{item[k]}]'
